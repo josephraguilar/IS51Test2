@@ -6,7 +6,7 @@
 
 <ul class="nav justify-content-end nav-action-container">
   <li class="nav-item">
-    <button mat-raised-button color="primary">Add Test</button>
+    <button (click)="addTest()" mat-raised-button color="primary">Add Test</button>
   </li>
   <li class="nav-item">
     <button mat-raised-button color="primary">Compute Grade</button>
@@ -50,7 +50,7 @@
       <mat-card-actions>
         <div class="btn-group pull-right">
           <button mat-raised-button color="primary" class="pull-right">Save</button>
-          <button mat-raised-button color="warn">Delete</button>
+          <button (click)="deleteTest(i)" mat-raised-button color="warn">Delete</button>
         </div>
       </mat-card-actions>
     </mat-card>
