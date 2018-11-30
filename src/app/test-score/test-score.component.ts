@@ -5,14 +5,7 @@ import { Router } from '@angular/router';
 import { ToastService } from '../toast/toast.service';
 import { Test } from './test.model';
 
-export interface ITest {
-  id?: number;
-  testName: string;
-  pointsPossible: number;
-  pointsReceived: number;
-  percentage: number;
-  grade: string;
-}
+
 
 @Component({
   selector: 'app-test-score',
@@ -21,7 +14,8 @@ export interface ITest {
 })
 export class TestScoreComponent implements OnInit {
 
-  tests: Array<ITest> = [];
+  tests: Array<Test> = [];
+
   constructor(
     private http: Http,
     private activatedRoute: ActivatedRoute,
@@ -30,23 +24,29 @@ export class TestScoreComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    const savedTests = await this.getItemsFromLocalStorage('tests');
-    this.tests = savedTests;
+    // const savedTests = await this.getItemsFromLocalStorage('tests');
+    // if (savedTests && savedTests.length > 0) {
+    //   this.tests = savedTests;
+    // } else {
+    //   this.tests = await this.loadItemsFromFile();
+    console.log(this.loadItemsFromFile())
+    // }
+    
   }
 
-  addTest(test: ITest) {
-    this.tests.unshift(test)
+  async loadItemsFromFile() {
+    const data = await this.http.get('assets/tests.json').toPromise();
+    return data;
+  }
+
+  addTest() {
+    this.tests.unshift(new Test({}));
   }
 
   deleteTest(index: number) {
     this.tests.splice(index, 1);
     this.saveItemsToLocalStorage(this.tests)
   }
-
-  // saveTest(test: any) {
-    // this.tests
-    // this.sortById(this.tests);
-  // } 
 
   saveItemsToLocalStorage(test: Array<Test>) {
     const savedTests = localStorage.setItem('tests', JSON.stringify(this.tests));
@@ -55,11 +55,7 @@ export class TestScoreComponent implements OnInit {
 
   async getItemsFromLocalStorage(key: string) {
     const savedTests = JSON.parse(localStorage.getItem(key));
-    if (savedTests.length > 0) {
       return savedTests;
-    } else {
-      null
-    }
   }
 
 }
