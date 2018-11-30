@@ -46,7 +46,7 @@ export class TestScoreComponent implements OnInit {
   // saveTest(test: any) {
     // this.tests
     // this.sortById(this.tests);
-  // }
+  // } 
 
   saveItemsToLocalStorage(test: Array<Test>) {
     const savedTests = localStorage.setItem('tests', JSON.stringify(this.tests));
